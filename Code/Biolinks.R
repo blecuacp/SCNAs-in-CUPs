@@ -18,7 +18,7 @@ ss <- read.csv(paste("Data",file,sep = "/"))
 
 ## Get methylation arrays ('.idat' files) from Biolinks organized per cancer type and per sample within the TrainingSet_Arrays directory: 
 
-cdir="TrainingSet_Arrays"#"ValidationSet_Arrays" for the validation ochort
+cdir="TrainingSet_Arrays"#"ValidationSet_Arrays" for the validation cohort
 if(!dir.exists(cdir))dir.create(cdir)
 
 setwd("TrainingSet_Arrays")

@@ -11,13 +11,13 @@ K_homdel=4.9
 
 ## Uplodad Validation set TableS3:
 
-file="Additional.File.4_TableS3.csv"
+file="Data/Additional.File.4_TableS3.csv"
 ss <- read.csv(file)
 dim(ss)
 
 ##Run 'Run_Minfi.R' and 'Run_CONUMEE.R' for validation set above to generate: "Log2_Ratios_ValidationSet.RData"
 
-load("Log2_Ratios_ValidationSet.RData")
+load("ValidationSet_Arrays/Log2_Ratios_ValidationSet.RData")
 getwd()
 IDs <- list.files(path="path-to-conumee-segment-Files/", pattern = "^Segments", full.names = TRUE, recursive = TRUE)
 

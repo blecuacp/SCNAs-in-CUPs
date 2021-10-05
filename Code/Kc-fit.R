@@ -9,13 +9,13 @@ library(regioneR)
 
 ## Load SampleSheet
 
-file=Additional.File.2_TableS1.csv
+file="Data/Additional.File.2_TableS1.csv"
 
-ss <- read.csv("")
+ss <- read.csv(file)
 
 ## Load gene list
 
-file="CancerGenes.csv"
+file="Data/CancerGenes.csv"
 bed <- read.csv(file, stringsAsFactors = F)
 dim(bed)
 
@@ -28,11 +28,11 @@ Genes <- bed
 
 ##Load training set samples CONUMEE
 
-file = "Log2_Ratios_TrainingSet.RData"
+file = "TrainingSet_Arrays/Log2_Ratios_TrainingSet.RData"
 load(file)
 
 ##More than 10 copies
-files <- list.files(path="your path to CONUMEE output",pattern="05.txt$", full.names = T, recursive = T)
+files <- list.files("path=path-to-conumee-segment-Files/",pattern="05.txt$", full.names = T, recursive = T)
 
 ## ASCAT_AMP10s: Amplifications >=10 copies
 

@@ -12,9 +12,9 @@ source("Custom_Functions.R")
 ## Preprocess data
 ## Load SampleSheet
 
-file=Additional.File.2_TableS1.csv
+file="Data/Additional.File.2_TableS1.csv"
 
-ss <- read.csv("")
+ss <- read.csv(file)
 
 ## Upload Copy Number Polymorphism file from Broad Inst. for their exclusion
 
@@ -59,7 +59,7 @@ dim(ss)
 can <- unique(ss$Cancer)
 
 ##Load query samples: Training set
-file = "Processed.rgSet_TrainingSet.RData"
+file = "TrainingSet_Arrays/Processed.rgSet_TrainingSet.RData"
 load(file)
 my.data <- CNV.load(mSetSqFlt)
 
@@ -78,7 +78,7 @@ for(c in can){
 
 ## To generate the file "Processed.rgSet_BLOOD_96WB.RData" below: go to GEO repository refereed to in the paper, retrieve the '.idat' files and run 'Run_Minfi.R' code for the 96 whole blood samples.
 
-file="Processed.rgSet_BLOOD_96WB.RData"
+file="WholeBlood_Controls/Processed.rgSet_BLOOD_96WB.RData"
 load(file)
 controls <- CNV.load(mSetSqFltn)
 print("control loaded")
@@ -92,7 +92,7 @@ controls@intensity <-controls@intensity[rownames(controls@intensity)%in%rownames
 for(id in ss$Sample_Name){
   print(sprintf("muestra %i de %i %s",which(ss$Sample_Name%in%id),length(ss$Sample_Name),unique(c)));
 
-  cdir <- paste(c,id,sep = "/");
+  cdir <- paste("TrainingSet_Arrays",paste(c,id,sep = "/"),sep = "/");
   getwd()
 
   ##Make sure anno object has same #probes as control/query
@@ -122,4 +122,4 @@ file.move(c(sprintf("%s_annotated.pdf",id),sprintf("Segments_%s.txt",id)),cdir, 
   }
 }
 
-save(Log2, file="Log2_Ratios_TrainingSet.RData")
+save(Log2, file="TrainingSet_Arrays/Log2_Ratios_TrainingSet.RData")
