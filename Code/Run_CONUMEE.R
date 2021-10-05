@@ -37,7 +37,7 @@ seqnames(Exclude)
 
 ## Bed file CancerGenes most amplified/most deleted in cancer autosomal chromosomes
 
-file="CancerGenes.csv"
+file="Data/CancerGenes.csv"
 bed <- read.csv(file, stringsAsFactors = F)
 dim(bed)
 
