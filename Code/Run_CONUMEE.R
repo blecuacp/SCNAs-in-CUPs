@@ -7,7 +7,7 @@ library(minfi)
 library("minfiData")
 library(regioneR)
 library(filesstrings)
-source("Custom_Functions.R")
+source("Data/Custom_Functions.R")
 
 ## Preprocess data
 ## Load SampleSheet
@@ -18,7 +18,7 @@ ss <- read.csv(file)
 
 ## Upload Copy Number Polymorphism file from Broad Inst. for their exclusion
 
-file <- "CNV_Germline_GSITIC2_BROAD_SNP6.merged.151117.hg19.CNV.txt"
+file <- "Data/CNV_Germline_GSITIC2_BROAD_SNP6.merged.151117.hg19.CNV.txt"
 cnvbroad <- read.delim(file,header=T,sep="\t")
 
 ## Add 'chr' tag in front of chr numbers
