@@ -129,8 +129,7 @@ for(id in files){
     Data[["Gain"]][[ID]]=list(Count=count, NumGenes=length(unique(seggr.matched$name)),Concordance=count/length(unique(seggr.matched$name)))
   }
 }
-length(Data$AMP10)
-getwd()
+
 
 save(Data,file="CONUMEEvsASCAT_AMP.AMP10.Gains_TPR.RData")
 
