@@ -20,7 +20,7 @@ We suggest the interested party to run the code as follows:
 	5.a Run it once for the Training Cohort.
 	5.b To reproduce the other K_c constants is straight forward.
 
-6- Run CONUMEE for the Validation Cohort only as Query and whole blood cohort as Control:
+6- Run Code/Run_CONUMEE.R for the Validation Cohort only as Query and whole blood cohort as Control (thhis step may take several hours):
 	6.a Use as input data the output from Run_Minfi.R for the Validation cohort (Query) and 
 	6.b Use as input data the output from Run_Minfi.R for the GEO data set (Control).
 	6.c Segemented files and full genome (excluding sex chromosomes) plots will be generated.
