@@ -63,8 +63,13 @@ mSetSqFltn
 
 mSetSqFltn <-  maxprobes::dropXreactiveLoci(mSetSqFltn)
 
+####For Blood controls DO NOT DO THIS. Just keep and save the variable mSetSqFltn
 mSetSqFltn <- mSetSqFlt
+####
 
 getwd()
-save(mSetSqFlt,file = "TrainingSet_Arrays/Processed.rgSet_TrainingSet.RData")#For blood controls: "WholeBlood_Controls/Processed.rgSet_BLOOD_96WB.RData"
+
+#For Blood controls, save the variable mSetSqFltn
+save(mSetSqFlt,file = "TrainingSet_Arrays/Processed.rgSet_TrainingSet.RData")
+#For blood controls: save(mSetSqFltn,file = "WholeBlood_Controls/Processed.rgSet_TrainingSet.RData")
 print("Done Saving")
