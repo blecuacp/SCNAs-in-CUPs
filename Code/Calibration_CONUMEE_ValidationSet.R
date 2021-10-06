@@ -15,11 +15,11 @@ file="Data/Additional.File.4_TableS3.csv"
 ss <- read.csv(file)
 dim(ss)
 
-##Run 'Run_Minfi.R' and 'Run_CONUMEE.R' for validation set above to generate: "Log2_Ratios_ValidationSet.RData"
+##Run 'Run_Minfi.R' and 'Run_CONUMEE.R' for validation set above to generate: "Log2_Ratios_ValidationSet_Arrays.RData"
 
-load("ValidationSet_Arrays/Log2_Ratios_ValidationSet.RData")
+load("ValidationSet_Arrays/CONUMEE/Log2_Ratios_ValidationSet_Arrays.RData")
 getwd()
-IDs <- list.files(path="path-to-conumee-segment-Files/", pattern = "^Segments", full.names = TRUE, recursive = TRUE)
+IDs <- list.files(path="ValidationSet_Arrays/CONUMEE/", pattern = "^Segments", full.names = TRUE, recursive = TRUE)
 
 Dirs <- gsub("Segments_","",gsub(".txt","",basename(IDs)))
 
@@ -40,7 +40,8 @@ for(id in Dirs){
 for(dir in Dirs){
   
   print(which(Dirs%in%dir))
-  seg <- read.delim(sprintf("path-to-conumee-segment-Files/%s/Segments_%s.txt",dir,dir), header=T, sep="\t")
+  cancer=ss$Cancer[ss$Sample_Name%in%dir]
+  seg <- read.delim(sprintf("ValidationSet_Arrays/CONUMEE/%s/%s/Segments_%s.txt",cancer,dir,dir), header=T, sep="\t")
   dim(seg)
   if(is.null(Log2[[dir]]$log2ratio))next;
   seg$CNCall="Diploid"
@@ -51,7 +52,7 @@ for(dir in Dirs){
     if(seg$seg.mean[i] <= Log2[[dir]]$HetLoss )seg$CNCall[i] <- "HetLoss"
     if(seg$seg.mean[i] <= Log2[[dir]]$HomDel )seg$CNCall[i] <- "HomDel"
   }
-  write.table(seg,sprintf("path-to-conumee-segment-Files/%s/Segments_%s_withCalls.txt",dir,dir), col.names = T, row.names = F, quote = F,sep="\t")
+  write.table(seg,sprintf("ValidationSet_Arrays/CONUMEE/%s/%s/Segments_%s_withCalls.txt",cancer,dir,dir), col.names = T, row.names = F, quote = F,sep="\t")
   
 }
 
@@ -60,7 +61,8 @@ for(dir in Dirs){
 for(dir in Dirs){
 
   print(which(Dirs%in%dir))
-  seg <- read.delim(sprintf("path-to-conumee-segment-Files/%s/Segments_%s.txt",dir,dir), header=T, sep="\t")
+  cancer=ss$Cancer[ss$Sample_Name%in%dir]
+  seg <- read.delim(sprintf("ValidationSet_Arrays/CONUMEE/%s/%s/Segments_%s.txt",cancer,dir,dir), header=T, sep="\t")
   dim(seg)
   if(is.null(Log2[[dir]]$log2ratio))next;
   seg$CNCall="Diploid"
@@ -70,5 +72,5 @@ for(dir in Dirs){
     if(seg$seg.mean[i] >= 0.3)seg$CNCall[i] <- "Amp"
     if(seg$seg.mean[i] <= -0.3)seg$CNCall[i] <- "HetLoss"
   }
-  write.table(seg,sprintf("path-to-conumee-segment-Files/%s/Segments_%s_withCalls_Standard.txt",dir,dir), col.names = T, row.names = F, quote = F,sep="\t")
+  write.table(seg,sprintf("ValidationSet_Arrays/CONUMEE/%s/%s/Segments_%s_withCalls_Standard.txt",cancer,dir,dir), col.names = T, row.names = F, quote = F,sep="\t")
 }

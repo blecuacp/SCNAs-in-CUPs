@@ -34,18 +34,18 @@ ss <- read.csv(file)
 ##TPRs: True Positive Rates, defined as TP/(TP+FN)
 ##Amplification: "Amp" called by CONUMEE that are "Amp" in TCGA
 
-files <- list.files(path = "CONUMEE_ValidationSet/",pattern = "Calls.txt$",full.names = T,recursive = T)
-Data=list()
+files <- list.files(path = "ValidationSet_Arrays/CONUMEE/",pattern = "Calls.txt$",full.names = T,recursive = T)
 
+Data=list()
 for(id in files){
   print(which(files%in%id))
   seg <- read.delim(id, header=T,sep="\t")
   segb <- data.frame(chr=seg$chrom, start=seg$loc.start, end=seg$loc.end, log2r= seg$seg.mean, CNCall=seg$CNCall)
   seggr <- toGRanges(segb)
   ID=gsub("_withCalls.txt","",gsub("Segments_","",basename(id)))
-  k <- which(ss10$Sample_Name%in%ID)
+  k <- which(ss$Sample_Name%in%ID)
   dd <- toGRanges(bed)
-  genes <- strsplit(as.character(ss$ASCAT_AMP),split = ";")[[1]]
+  genes <- strsplit(as.character(ss$ASCAT_AMP[k]),split = ";")[[1]]
   int <- suppressWarnings(findOverlaps(seggr,dd[dd$name%in%genes]))
   seggr.matched <- seggr[queryHits(int)];
   # Add the metadata from dd
@@ -76,7 +76,7 @@ for(id in files){
   segb <- data.frame(chr=seg$chrom, start=seg$loc.start, end=seg$loc.end, log2r= seg$seg.mean, CNCall=seg$CNCall)
   seggr <- toGRanges(segb)
   ID=gsub("_withCalls.txt","",gsub("Segments_","",basename(id)))
-  k <- which(ss10$Sample_Name%in%ID)
+  k <- which(ss$Sample_Name%in%ID)
   dd <- toGRanges(bed)
   genes <- strsplit(as.character(ss$ASCAT_AMP10[k]),split = ";")[[1]]
   int <- suppressWarnings(findOverlaps(seggr,dd[dd$name%in%genes]))
@@ -107,7 +107,7 @@ for(id in files){
   seggr <- toGRanges(segb)
   ID=gsub("_withCalls.txt","",gsub("Segments_","",basename(id)))
   #ID="TCGA-05-4433-01A-22D-1856-05"
-  k <- which(ss10$Sample_Name%in%ID)
+  k <- which(ss$Sample_Name%in%ID)
   dd <- toGRanges(bed)
   genes <- strsplit(as.character(ss$ASCAT_Gain[k]),split = ";")[[1]]
   int <- suppressWarnings(findOverlaps(seggr,dd[dd$name%in%genes]))
@@ -131,22 +131,21 @@ for(id in files){
 }
 
 
-save(Data,file="CONUMEEvsASCAT_AMP.AMP10.Gains_TPR.RData")
+save(Data,file="ValidationSet_Arrays/CONUMEEvsASCAT_AMP.AMP10.Gains_TPR.RData")
 
 ## Using the standard method: 
 
 ### if log2(R) >0.3 ==> "Amp" (All gains,amps and amp10s in our algorithm) and "Amp" or "Amp10" or "Gains" in TCGA 
 
-files <- list.files(path = "CONUMEE_ValidationSet/",pattern = "Calls_Standard.txt$",full.names = T,recursive = T)
+files <- list.files(path = "ValidationSet_Arrays/CONUMEE/",pattern = "Calls_Standard.txt$",full.names = T,recursive = T)
 Data=list()
-
 for(id in files){
   print(which(files%in%id))
   seg <- read.delim(id, header=T,sep="\t")
   segb <- data.frame(chr=seg$chrom, start=seg$loc.start, end=seg$loc.end, log2r= seg$seg.mean, CNCall=seg$CNCall)
   seggr <- toGRanges(segb)
   ID=gsub("_withCalls_Standard.txt","",gsub("Segments_","",basename(id)))
-  k <- which(ss10$Sample_Name%in%ID)
+  k <- which(ss$Sample_Name%in%ID)
   dd <- toGRanges(bed)
   genes <- c(strsplit(as.character(ss$ASCAT_AMP[k]),split = ";")[[1]],
              strsplit(as.character(ss$ASCAT_AMP10[k]),split = ";")[[1]],
@@ -184,7 +183,7 @@ for(id in files){
   segb <- data.frame(chr=seg$chrom, start=seg$loc.start, end=seg$loc.end, log2r= seg$seg.mean, CNCall=seg$CNCall)
   seggr <- toGRanges(segb)
   ID=gsub("_withCalls_Standard.txt","",gsub("Segments_","",basename(id)))
-  k <- which(ss10$Sample_Name%in%ID)
+  k <- which(ss$Sample_Name%in%ID)
   dd <- toGRanges(bed)
   genes <- c(strsplit(as.character(ss$ASCAT_HetLoss[k]),split = ";")[[1]],
              strsplit(as.character(ss$ASCAT_HomDel[k]),split = ";")[[1]])
@@ -212,4 +211,4 @@ for(id in files){
 }
 
 
-save(Data,file="CONUMEEvsASCAT_Standard_TPR.RData")
+save(Data,file="ValidationSet_Arrays/CONUMEEvsASCAT_Standard_TPR.RData")

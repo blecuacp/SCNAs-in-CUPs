@@ -10,7 +10,7 @@ library(filesstrings)
 source("Data/Custom_Functions.R")
 
 ## Preprocess data
-## Load SampleSheet
+## Load SampleSheet Training or Validation Sets:
 
 file="Data/Additional.File.2_TableS1.csv"
 
@@ -56,31 +56,38 @@ anno <- CNV.create_anno(array_type = "450k",chrXY = F,
                         exclude_regions = Exclude, detail_regions = detail_region)
 
 dim(ss)
-can <- unique(ss$Cancer)
+cancers <- unique(ss$Cancer)
 
-##Load query samples: Training set
-file = "TrainingSet_Arrays/Processed.rgSet_TrainingSet.RData"
+c="TrainingSet_Arrays"#or ValidationSet_Arrays
+##Load query samples: Training set/Validation Set
+file = sprintf("%s/Processed.rgSet_%s.RData",c,c)
 load(file)
-my.data <- CNV.load(mSetSqFlt)
+my.data <- CNV.load(Query)
 
+##Create CONUMEE/ directory:
 
+cdir=paste(c,"CONUMEE",sep = "/")
+if(!dir.exists(cdir))create_dir(cdir)
+getwd()
+
+setwd(cdir)
 
 Log2=list()
-for(c in can){
-  print(c);
-  print(which(can%in%c))
+for(can in cancers){
+  print(can);
+  print(which(cancers%in%can))
   
-  if(!dir.exists(c))create_dir(c)
+  if(!dir.exists(can))create_dir(can)
   getwd()
 
 ## Normals
 ## Whole Blood
 
-## To generate the file "Processed.rgSet_BLOOD_96WB.RData" below: go to GEO repository refereed to in the paper, retrieve the '.idat' files and run 'Run_Minfi.R' code for the 96 whole blood samples.
+## To generate the file "Processed.rgSet_BLOOD_96WB.RData" below: go to GEO repository refereed to in the paper, retrieve the '.idat' files with COde/GEO.Rand run 'Code/Run_Minfi.R' code for the 96 whole blood samples.
 
-file="WholeBlood_Controls/Processed.rgSet_BLOOD_96WB.RData"
+file="../../WholeBlood_Controls/Processed.rgSet_WholeBlood_Controls.RData"
 load(file)
-controls <- CNV.load(mSetSqFltn)
+controls <- CNV.load(Controls)
 print("control loaded")
 
 
@@ -89,15 +96,14 @@ print("control loaded")
 my.data@intensity <- my.data@intensity[rownames(my.data@intensity)%in%rownames(controls@intensity),]
 controls@intensity <-controls@intensity[rownames(controls@intensity)%in%rownames(my.data@intensity),]
 
-for(id in ss$Sample_Name){
-  print(sprintf("muestra %i de %i %s",which(ss$Sample_Name%in%id),length(ss$Sample_Name),unique(c)));
+for(id in ss$Sample_Name[ss$Cancer%in%can]){
+  print(sprintf("muestra %i de %i %s",which(ss$Sample_Name%in%id),length(ss$Sample_Name),unique(can)));
 
-  cdir <- paste("TrainingSet_Arrays",paste(c,id,sep = "/"),sep = "/");
+  cdir <- paste(can,id,sep = "/")
   getwd()
 
   ##Make sure anno object has same #probes as control/query
   
-  Query <- mSetSqFlt
   mset <- Query[rownames(Query)%in%rownames(my.data@intensity)]
   Mset <- mapToGenome(mset)
   anno@probes <- subsetByOverlaps(anno@probes, granges(Mset))
@@ -106,9 +112,9 @@ for(id in ss$Sample_Name){
   if(!file.exists(cdir))dir.create(cdir)
 
 ## Run Conumee
-  sample <- ss$Sentrix_ID[ss$Sample_Name%in%id]
+  sample <- gsub("\\./","",ss$filenames[ss$Sample_Name%in%id])
   fit  <- CNV.fit(my.data[which(colnames(my.data@intensity)%in%sample)], controls, anno)
-  Log2[[id]] <- list(log2ratio=fit@fit$ratio, Purity=ss$`Purity_Impute_RFPurify(Absolute)`[ss$Sample_Name%in%id])
+  Log2[[id]] <- list(log2ratio=fit@fit$ratio, Purity=ss$Purity_Impute_RFPurify.Absolute.[ss$Sample_Name%in%id])
   fit2 <- CNV.segment(CNV.detail(CNV.bin(fit)))
 
 ##Visualize and write up coordinates
@@ -122,4 +128,6 @@ file.move(c(sprintf("%s_annotated.pdf",id),sprintf("Segments_%s.txt",id)),cdir, 
   }
 }
 
-save(Log2, file="TrainingSet_Arrays/Log2_Ratios_TrainingSet.RData")
+save(Log2, file=sprintf("Log2_Ratios_%s.RData",c))
+
+setwd("../../")

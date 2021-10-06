@@ -28,11 +28,11 @@ Genes <- bed
 
 ##Load training set samples CONUMEE
 
-file = "TrainingSet_Arrays/Log2_Ratios_TrainingSet.RData"
+file = "TrainingSet_Arrays/CONUMEE/Log2_Ratios_TrainingSet.RData"
 load(file)
 
 ##More than 10 copies
-files <- list.files("path=path-to-conumee-segment-Files/",pattern="05.txt$", full.names = T, recursive = T)
+files <- list.files("TrainingSet_Arrays/CONUMEE/",pattern="05.txt$", full.names = T, recursive = T)
 
 ## ASCAT_AMP10s: Amplifications >=10 copies
 
@@ -65,7 +65,7 @@ for(id in files){
       res <- int[int$name%in%gene,]
       List=c(List,int$log2r)
     }
-    Data[[ID]]=list(y=mean(List), intercept=mean(Log2[[ID]]$log2ratio, na.rm=T),var=ss$'Purity_Impute_RFPurify(Absolute)'[ss$Sample_Name%in%ID]*sd(Log2[[ID]]$log2ratio,na.rm=T))
+    Data[[ID]]=list(y=mean(List), intercept=mean(Log2[[ID]]$log2ratio, na.rm=T),var=ss$Purity_Impute_RFPurify.Absolute.[ss$Sample_Name%in%ID]*sd(Log2[[ID]]$log2ratio,na.rm=T))
   }
 }
 
@@ -86,15 +86,15 @@ for(id in IDList){
 x <- X-Int
 y <- Var
 
-fit <-lm(Var~0+x)
+fit <-lm(y~0+x)
 summary(fit)
 coeff <- fit$coefficients
 K=1/coeff
 getwd()
-write.table(K,"Amp10_Threshold.txt", quote = F)
+write.table(K,"TrainingSet_Arrays/CONUMEE/Amp10_Threshold.txt", quote = F)
 
 x <- X-Int
-pdf("Amp10_fit.pdf")
+pdf("TrainingSet_Arrays/CONUMEE/Amp10_fit.pdf")
 plot(Var~x, ylim=c(0,1), sub=sprintf("Coeff=%.3f",coeff))
 fit <-lm(Var~0+x)
 abline(fit,col="red")

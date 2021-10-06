@@ -20,17 +20,17 @@ We suggest the interested party to run the code as follows:
 
 * 4- Run Code/Run_Minfi.R to process the raw .idat files for the whole blood control group above in 3).
 
-* 5- To determine the K_c constants mentioned in the text (Fig. 1a), we provide code (for c="Amp10" as an illustrative example) under Code/Kc-fit.R:
-  * 5.a Run it once for the Training Cohort.
-  * 5.b To reproduce the other K_c constants is straight forward.
+* 5- Run Code/Run_CONUMEE.R for the Trainging and Validation Cohorts as Query and whole blood cohort as Control (this step may take several hours):
+  * 5.a Use as input data the output from Run_Minfi.R for the Training/Validation cohort (Query) and
+  * 5.b Use as input data the output from Run_Minfi.R for the GEO data set (Controls).
+  * 5.c Segemented files and full genome (excluding sex chromosomes) plots will be generated.
 
-* 6- Run Code/Run_CONUMEE.R for the Validation Cohort only as Query and whole blood cohort as Control (thhis step may take several hours):
-  * 6.a Use as input data the output from Run_Minfi.R for the Validation cohort (Query) and 
-  * 6.b Use as input data the output from Run_Minfi.R for the GEO data set (Control).
-  * 6.c Segemented files and full genome (excluding sex chromosomes) plots will be generated.
+* 6- To determine the K_c constants mentioned in the text (Fig. 1a), we provide code (for c="Amp10" as an illustrative example) under Code/Kc-fit.R:
+  * 6.a Run it once for the Training Cohort.
+  * 6.b To reproduce the other K_c constants is straight forward.
 
 * 7- To Calibrate and determine the diferent Copy Number Calls from the previous step, run Code/Calibration_CONUMEE_ValidationSet.R:
-  * 7a Produce Segmented files "withCalls".
+  * 7.a Produce Segmented files "withCalls".
 
 * 8- Reproduce Figures 1d) and 1c):
   * 8.a True Positive Rate: Run Code/Comparison_CONUMEE_ASCAT_TruePositiveRate.R for the Validation Cohort.

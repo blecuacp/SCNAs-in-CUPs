@@ -87,7 +87,8 @@ for(subdir in unique(match.file.cases.all$cases)){
   }
 }
 
-## Dump all '.idat' files all together under directory "TrainingSet_Arrays":
+## Dump all '.idat' files all together under directory "TrainingSet_Arrays"
+#"ValidationSet_Arrays" for the validation cohort:
 setwd("../")
 
 

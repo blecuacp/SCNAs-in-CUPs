@@ -5,16 +5,16 @@ getwd()
 rm(list=ls())
 
 
-load("CONUMEEvsASCAT_AMP.AMP10.Gains_TPR.RData")
+load("ValidationSet_Arrays/CONUMEEvsASCAT_AMP.AMP10.Gains_TPR.RData")
 Algorithm<- Data
 
-load("CONUMEEvsASCAT_Standard_TPR.RData")
+load("ValidationSet_Arrays/CONUMEEvsASCAT_Standard_TPR.RData")
 Standard<- Data
 
-load("CONUMEEvsASCAT_AMP.AMP10.Gains_FPR.RData")
+load("ValidationSet_Arrays/CONUMEEvsASCAT_AMP.AMP10.Gains_FPR.RData")
 AlgorithmFP <- Data
 
-load("CONUMEEvsASCAT_Standard_FPR.RData")
+load("ValidationSet_Arrays/CONUMEEvsASCAT_Standard_FPR.RData")
 StandardFP <- Data
 
 file="Data/Additional.File.4_TableS3.csv"

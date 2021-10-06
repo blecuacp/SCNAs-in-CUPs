@@ -29,16 +29,15 @@ ss <- read.csv(file)
 ##FPRs: False Positive Rates, defined as FP/(FP+TN)
 ##Amplification: "Amp" called by CONUMEE that are not "Amp" in TCGA (everythig  but "Amp": "Amp10" or "Gain" or "Diploid" or "HetLoss or "HomDel")
 
-files <- list.files(path = "CONUMEE_ValidationSet/",pattern = "Calls.txt$",full.names = T,recursive = T)
+files <- list.files(path = "ValidationSet_Arrays/CONUMEE/",pattern = "Calls.txt$",full.names = T,recursive = T)
 Data=list()
-
 for(id in files){
   print(which(files%in%id))
   seg <- read.delim(id, header=T,sep="\t")
   segb <- data.frame(chr=seg$chrom, start=seg$loc.start, end=seg$loc.end, log2r= seg$seg.mean, CNCall=seg$CNCall)
   seggr <- toGRanges(segb)
   ID=gsub("_withCalls.txt","",gsub("Segments_","",basename(id)))
-  k <- which(ss10$Sample_Name%in%ID)
+  k <- which(ss$Sample_Name%in%ID)
   dd <- toGRanges(bed)
   genes <- c(strsplit(as.character(ss$ASCAT_Gain[k]),split = ";")[[1]],
              strsplit(as.character(ss$ASCAT_AMP10[k]),split = ";")[[1]],
@@ -77,7 +76,7 @@ for(id in files){
   segb <- data.frame(chr=seg$chrom, start=seg$loc.start, end=seg$loc.end, log2r= seg$seg.mean, CNCall=seg$CNCall)
   seggr <- toGRanges(segb)
   ID=gsub("_withCalls.txt","",gsub("Segments_","",basename(id)))
-  k <- which(ss10$Sample_Name%in%ID)
+  k <- which(ss$Sample_Name%in%ID)
   dd <- toGRanges(bed)
   genes <- c(strsplit(as.character(ss$ASCAT_Gain[k]),split = ";")[[1]],
              strsplit(as.character(ss$ASCAT_AMP[k]),split = ";")[[1]],
@@ -115,7 +114,7 @@ for(id in files){
   seggr <- toGRanges(segb)
   ID=gsub("_withCalls.txt","",gsub("Segments_","",basename(id)))
   #ID="TCGA-05-4433-01A-22D-1856-05"
-  k <- which(ss10$Sample_Name%in%ID)
+  k <- which(ss$Sample_Name%in%ID)
   dd <- toGRanges(bed)
   genes <- c(strsplit(as.character(ss$ASCAT_AMP[k]),split = ";")[[1]],
              strsplit(as.character(ss$ASCAT_AMP10[k]),split = ";")[[1]],
@@ -143,7 +142,7 @@ for(id in files){
   }
 }
 getwd()
-save(Data,file="CONUMEEvsASCAT_AMP.AMP10.Gains_FPR.RData")
+save(Data,file="ValidationSet_Arrays/CONUMEEvsASCAT_AMP.AMP10.Gains_FPR.RData")
 
 
 
@@ -160,7 +159,7 @@ for(id in files){
   segb <- data.frame(chr=seg$chrom, start=seg$loc.start, end=seg$loc.end, log2r= seg$seg.mean, CNCall=seg$CNCall)
   seggr <- toGRanges(segb)
   ID=gsub("_withCalls_Standard.txt","",gsub("Segments_","",basename(id)))
-  k <- which(ss10$Sample_Name%in%ID)
+  k <- which(ss$Sample_Name%in%ID)
   dd <- toGRanges(bed)
   genes <- c(strsplit(as.character(ss$ASCAT_HetLoss[k]),split = ";")[[1]],
              strsplit(as.character(ss$ASCAT_HomDel[k]),split = ";")[[1]],
@@ -199,7 +198,7 @@ for(id in files){
   segb <- data.frame(chr=seg$chrom, start=seg$loc.start, end=seg$loc.end, log2r= seg$seg.mean, CNCall=seg$CNCall)
   seggr <- toGRanges(segb)
   ID=gsub("_withCalls_Standard.txt","",gsub("Segments_","",basename(id)))
-  k <- which(ss10$Sample_Name%in%ID)
+  k <- which(ss$Sample_Name%in%ID)
   dd <- toGRanges(bed)
   genes <- c(strsplit(as.character(ss$ASCAT_AMP[k]),split = ";")[[1]],
              strsplit(as.character(ss$ASCAT_AMP10[k]),split = ";")[[1]],
@@ -228,4 +227,4 @@ for(id in files){
   }
 }
 
-save(Data,file="CONUMEEvsASCAT_Standard_FPR.RData")
+save(Data,file="ValidationSet_Arrays/CONUMEEvsASCAT_Standard_FPR.RData")
