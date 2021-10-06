@@ -1,6 +1,6 @@
 # Project Title
 
-Here one can find data and code to reproduce the K_c constants of the paper: A novel workflow for computational identification of somatic copy number alterations using DNA methylation microarrays in cancers of unknown primary", as well as key elements of Fig.1 (i.e., Figures 1c and 1d).
+Here one can find data and code to reproduce the K_c constants of the paper: "A novel workflow for computational identification of somatic copy number alterations using DNA methylation microarrays in cancers of unknown primary", as well as key elements of Fig.1 (i.e., Figures 1c and 1d).
 
 The necessary input files (or extra files needed to run the code) can be found under Data/. All the necessary (comented) code is under Code/.
 
@@ -8,9 +8,9 @@ The necessary input files (or extra files needed to run the code) can be found u
 
 We suggest the interested party to run the code as follows:
 
-1- Code to download the TCGA necessary data can be found in Code/Biolinks.R:
-	* 1.a Run this code once for the Training Set (Data/Additional.File.2_TableS1.csv). 
-	* 1.b Run this code once for the Validation Set (Data/Additional.File.4_TableS3.csv).
+* 1- Code to download the TCGA necessary data can be found in Code/Biolinks.R:
+  * 1.a Run this code once for the Training Set (Data/Additional.File.2_TableS1.csv). 
+  * 1.b Run this code once for the Validation Set (Data/Additional.File.4_TableS3.csv).
 
 2- Code to process and QC the methyaltion arrays (.idat files for both cohorts) can be found under Code/Run_Minfi.R:
 	* 2.a Run this code once for the Training Set.
