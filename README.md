@@ -12,7 +12,7 @@ We suggest the interested party to run the code as follows:
   * 1.a Run this code once for the Training Set (Data/Additional.File.2_TableS1.csv). 
   * 1.b Run this code once for the Validation Set (Data/Additional.File.4_TableS3.csv).
 
-* 2- Code to process and QC the methyaltion arrays (.idat files for both cohorts) can be found under Code/Run_Minfi.R:
+* 2- Code to process and QC the methylation arrays (.idat files for both cohorts) can be found under Code/Run_Minfi.R:
   * 2.a Run this code once for the Training Set.
   * 2.b Run this code once for the Validation Set.
 
