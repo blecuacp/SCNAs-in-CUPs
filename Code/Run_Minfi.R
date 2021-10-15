@@ -68,6 +68,9 @@ mSetSqFltn
 
 
 ## Exclude cross reactive probes 
+library(devtools)
+install_github("markgene/maxprobes", force=T)
+
 
 mSetSqFltn <-  maxprobes::dropXreactiveLoci(mSetSqFltn)
 
