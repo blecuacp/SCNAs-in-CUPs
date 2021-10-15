@@ -47,6 +47,13 @@ barplot(colMeans(detP), las=2,
 abline(h=0.05,col="red")
 dev.off()
 
+##Percentage of faulty probes: more than 10% we throw samples away.
+
+bad <- colnames(detP)[colSums(detP >=0.01)/nrow(detP) > 0.1]
+
+##Not bad samples in this case. Skip This step
+
+
 
 ## Ensure probes are in the same order in the mSetSqn and detP objects
 detP <- detP[match(featureNames(mSetSqn),rownames(detP)),]
